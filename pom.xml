@@ -24,6 +24,7 @@
      <version.plugin.maven-jar-plugin>2.6</version.plugin.maven-jar-plugin>
      <version.plugin.exec-maven-plugin>1.3.2</version.plugin.exec-maven-plugin>
      <version.plugin.appassembler-maven-plugin>1.9</version.plugin.appassembler-maven-plugin>
+     <testng.version>6.14.3</testng.version>
    </properties>
    
    <dependencies>
@@ -69,6 +70,12 @@
 	   <scope>system</scope>
 	   <systemPath>${basedir}/lib/opencv.jar</systemPath>
 	 </dependency>
+	 <dependency>
+       <groupId>org.testng</groupId>
+       <artifactId>testng</artifactId>
+       <version>${testng.version}</version>
+       <scope>test</scope>
+     </dependency>
    </dependencies>
    
    <build>
@@ -96,17 +103,19 @@
            </archive>
          </configuration>
        </plugin>
+       
        <plugin>
          <groupId>org.apache.maven.plugins</groupId>
-         <artifactId>maven-jar-plugin</artifactId>
-         <version>${version.plugin.maven-jar-plugin}</version>
+         <artifactId>maven-surefire-plugin</artifactId>
+         <version>2.20</version>
          <configuration>
-           <archive>
-             <manifest>
-               <addClasspath>true</addClasspath>
-               <mainClass>com.dovnard.screenrecorder.Main</mainClass>
-             </manifest>
-           </archive>
+           <suiteXmlFiles>
+             <suiteXmlFile>TestNG.xml</suiteXmlFile>
+           </suiteXmlFiles>
+           <additionalClasspathElements>
+            <additionalClasspathElement>lib/ffmpeg-linux-x86_64.jar</additionalClasspathElement>
+            <additionalClasspathElement>lib/ffmpeg-linux-x86.jar</additionalClasspathElement>
+           </additionalClasspathElements>
          </configuration>
        </plugin>
      </plugins>

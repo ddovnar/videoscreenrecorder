@@ -2,7 +2,9 @@ package com.dovnard.screenrecorder;
 
 import java.io.IOException;
 
+
 public interface ScreenRecorderListener {
-   public void frameRecorded(boolean fullFrame) throws IOException;
-   public void recordingStopped();
+   public void onFrameRecorded(long frameRecorded);
+   public void onStopRecording();
+   public void onStartRecording();
 }

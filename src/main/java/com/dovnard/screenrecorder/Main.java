@@ -2,12 +2,24 @@ package com.dovnard.screenrecorder;
 
 import java.io.IOException;
 
-public class Main {
-	
+import org.bytedeco.javacv.FrameRecorder.Exception;
+
+public class Main implements ScreenRecorderListener {
+	private OpenCVScreenRecorder scr;
+	public void start() throws Exception {
+		scr = new OpenCVScreenRecorder(true, this);
+		scr.setFolder("/home/ddovnar/Downloads/temp");
+		scr.start();
+	}
 	public static void main(String[] args) throws IOException {
 		System.out.println("ScreenRecorder running...");
+		Main m = new Main();
+		m.start();
+	}
+	/*public static void main1(String[] args) throws IOException {
+		System.out.println("ScreenRecorder running...");
 		
-		ScreenRecorder recorder = new ScreenRecorder();
+		ScreenRecorderTest recorder = new ScreenRecorderTest();
 		recorder.start();
 		
 		long lastFrameTime = 0;
@@ -42,6 +54,26 @@ public class Main {
 	      }
 		
 		recorder.stop();
+	}*/
+	@Override
+	public void onFrameRecorded(long frameRecorded) {
+		System.out.println("Main onFrameRecorded..." + frameRecorded);
+		if (frameRecorded > 20) {
+			try {
+				scr.stop();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	@Override
+	public void onStopRecording() {
+		System.out.println("Main onStopRecording...");
+	}
+	@Override
+	public void onStartRecording() {
+		System.out.println("Main onStartRecording...");
 	}
 	
 }
