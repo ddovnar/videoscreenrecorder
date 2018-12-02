@@ -116,4 +116,7 @@ public abstract class ScreenRecorder implements Runnable {
 		recording = false;
 		listener.onStopRecording();
 	}
+	public boolean isRecording() {
+		return this.recording;
+	}
 }

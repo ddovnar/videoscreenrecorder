@@ -8,6 +8,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import com.dovnard.screenrecorder.OpenCVHttpScreenRecorder;
+
 public class ScreenRecorderTestSuite {
 	@BeforeTest
 	protected void onBeforeTest() {
@@ -20,6 +22,11 @@ public class ScreenRecorderTestSuite {
 	
 	@Test(priority = 1, description="")
 	public void test1() throws Exception, InterruptedException {
+		OpenCVHttpScreenRecorderTest scr = new OpenCVHttpScreenRecorderTest();
+		//scr.start();
+		System.out.println("Video file recorded: http");
+	}
+	public void test2() throws Exception, InterruptedException {
 		OpenCVScreenRecorderTest scr = new OpenCVScreenRecorderTest();
 		scr.start();
 		System.out.println("Video file recorded: " + scr.getRecordedFile());

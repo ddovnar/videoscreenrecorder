@@ -5,16 +5,43 @@ import java.io.IOException;
 import org.bytedeco.javacv.FrameRecorder.Exception;
 
 public class Main implements ScreenRecorderListener {
-	private OpenCVScreenRecorder scr;
+	/*private OpenCVScreenRecorder scr;
 	public void start() throws Exception {
 		scr = new OpenCVScreenRecorder(true, this);
 		scr.setFolder("/home/ddovnar/Downloads/temp");
 		scr.start();
+	}*/
+	private OpenCVHttpScreenRecorder scr;
+	public void start() throws Exception {
+		scr = new OpenCVHttpScreenRecorder(true, this);
+		scr.start();
+	}
+	public void stop() {
+		try {
+			scr.stop();
+			try {
+	            Thread.sleep(100);
+	         } catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	public static void main(String[] args) throws IOException {
 		System.out.println("ScreenRecorder running...");
 		Main m = new Main();
 		m.start();
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                System.out.println("In shutdown hook");
+                //try {
+                    m.stop();
+                //} catch(Exception ex) {
+                //    ex.printStackTrace();
+                //}
+            }
+        }, "Shutdown-thread"));
 	}
 	/*public static void main1(String[] args) throws IOException {
 		System.out.println("ScreenRecorder running...");
@@ -58,14 +85,14 @@ public class Main implements ScreenRecorderListener {
 	@Override
 	public void onFrameRecorded(long frameRecorded) {
 		System.out.println("Main onFrameRecorded..." + frameRecorded);
-		if (frameRecorded > 20) {
+		/*if (frameRecorded > 20) {
 			try {
 				scr.stop();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}*/
 	}
 	@Override
 	public void onStopRecording() {
